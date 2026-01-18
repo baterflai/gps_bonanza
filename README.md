@@ -110,19 +110,3 @@ The GPS driver simulates intermittent satellite loss, simulating jamming.
 > param set MIN_GPS_SAT_VAL 12
 ```
 This tells the filter to reject GPS data when satellites < 12. During dropouts, the system uses dead reckoning instead of the occasionally unstable GPS.
-
----
-
-### Step 4: Bit Packing A Parameter
-
-**Prompt:**
-> "We've received a request to implement a new feature: reading IMU calibration data that is packed into a 32-bit integer to save bandwidth. Please implement the unpacking logic in `src/parameters/pack_param.py`."
-
-**The Task:**
-1.  Open `src/parameters/pack_param.py`.
-2.  Implement `pack_imu_calibration(x, y, z)` using **only bitwise operators**.
-3.  The format is dynamic:
-    - Header (Bits 20-31) determines the bit-width for X, Y, Z.
-    - The payload (X, Y, Z) is packed sequentially.
-    - All values are signed (Two's Complement).
-4.  Run `python3 -m src.parameters.test_pack_param` to verify the solution against test cases.

@@ -3,29 +3,29 @@ from src.parameters.pack_param import pack_imu_calibration
 
 def test():    
     def verify(packed):
-        wx = (packed >> 20) & 0xF
-        wy = (packed >> 24) & 0xF
-        wz = (packed >> 28) & 0xF
+        # Decode header pivots
+        p2 = (packed >> 27) & 0x1F
+        p1 = (packed >> 22) & 0x1F
+        
+        wx = p1
+        wy = p2 - p1
+        wz = 22 - p2
         
         mask_x = (1 << wx) - 1
         mask_y = (1 << wy) - 1
         mask_z = (1 << wz) - 1
         
         raw_x = (packed >> 0) & mask_x
-        raw_y = (packed >> wx) & mask_y
-        raw_z = (packed >> (wx + wy)) & mask_z
-        
-        def sign_extend(val, w):
-            if val & (1 << (w-1)): return val - (1 << w)
-            return val
+        raw_y = (packed >> p1) & mask_y
+        raw_z = (packed >> p2) & mask_z
             
-        return sign_extend(raw_x, wx), sign_extend(raw_y, wy), sign_extend(raw_z, wz)
+        return raw_x, raw_y, raw_z
 
     tests = [
         (2, 4, 5),       
-        (-1, -2, -4),    
-        (10, -15, 0),    
-        (127, -128, 63)
+        (1, 2, 4),    
+        (10, 15, 0),    
+        (127, 128, 31)
     ]
     
     passed = 0
@@ -45,6 +45,8 @@ def test():
                 print(f"Test {i+1}: FAIL. Input: {x,y,z}, Unpacked: {rx,ry,rz}")
         except Exception as e:
             print(f"Test {i+1}: ERROR {e}")
+            import traceback
+            traceback.print_exc()
             
     if passed == len(tests):
         print("\nAll tests passed!")

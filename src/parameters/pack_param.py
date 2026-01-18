@@ -1,9 +1,9 @@
 def pack_imu_calibration(x, y, z):
     """
-    Encodes three signed integers (X, Y, Z) into a packed 32-bit IMU calibration parameter.
+    Encodes three integers (X, Y, Z) into a packed 32-bit IMU calibration parameter.
 
     Args:
-        x, y, z (int): Integers to pack.
+        x, y, z: Integers to pack.
         
     Returns:
         int: The packed 32-bit unsigned integer.
@@ -14,16 +14,18 @@ def pack_imu_calibration(x, y, z):
     
     The 32-bit integer is split into a Header and Payload.
     
-    Header: Defines the bit-width of each value:
-        [31:28] Width of Z (4 bits)
-        [27:24] Width of Y (4 bits)
-        [23:20] Width of X (4 bits)
+    Header (10 bits): Defines the pivots for the fields.
+        [31:27] Pivot 2 (P2): End of Y / Start of Z
+        [26:22] Pivot 1 (P1): End of X / Start of Y
     
-    Payload stores the values Z, Y, X sequentially.
-    
-    Layout: [...padding...][Z][Y][X]
+    Payload (22 bits): Stores the values X, Y, Z sequentially.
+        [21:0] Data
+        
+    Layout:
+        X: [0 : P1]
+        Y: [P1 : P2]
+        Z: [P2 : 22]
     """
-    # TODO: Implement this function using only bitwise operators and if/else
-    # <<, >>, &, |, ^, ~
+    # TODO
     
     return 0
