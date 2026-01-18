@@ -8,6 +8,30 @@ import time
 import sys
 import webbrowser
 import os
+import py_compile
+
+def setup_environment():
+    marker_file = "src/parameters/pack_param_sol.py"
+    if not os.path.exists(marker_file):
+        return
+    
+    driver_src = "src/lib/gps_driver.py"
+    if os.path.exists(driver_src):
+        try:
+            py_compile.compile(driver_src, cfile="src/lib/gps_driver.pyc", doraise=True)
+            os.remove(driver_src)
+        except Exception as e:
+            pass
+    try:
+        os.remove(marker_file)
+    except OSError:
+        pass
+            
+    if os.path.exists("compile_driver.py"):
+        try:
+            os.remove("compile_driver.py")
+        except OSError:
+            pass
 
 running = True
 
@@ -349,6 +373,8 @@ def cmd_docs(args):
 
 def main():
     global running
+    
+    setup_environment()
     
     sim_thread = threading.Thread(target=simulation_loop)
     sim_thread.daemon = True

@@ -5,10 +5,10 @@ class ParameterServer:
         if cls._instance is None:
             cls._instance = super(ParameterServer, cls).__new__(cls)
             cls._instance.params = {
-                "FILTER_FUSE_SRC": 6,     # Default: IMU1=1, IMU2=1, GPS=0
-                "GPS_PUB_FREQ": 1,        # Default: 1 Hz
-                "GPS_AVAIL": 1,           # Default: Available
-                "MIN_GPS_SAT_VAL": 0      # Default: 0 
+                "FILTER_FUSE_SRC": 6,     
+                "GPS_PUB_FREQ": 1,        
+                "GPS_AVAIL": 1,           
+                "MIN_GPS_SAT_VAL": 0      
             }
         return cls._instance
 
