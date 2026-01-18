@@ -89,9 +89,11 @@ Sets GPS to 5 Hz. Now `dead_reckoning` stays False.
 
 ### Problem 3: Satellite Dropout Causes Position Jumps
 
-**Diagnosis:**
-After a few seconds, the candidate notices the position occasionally jumps significantly.
+**Prompt:**
 
+> "We're now informed of a new issue - the global position estimate ocassionally jumps significantly before converging back. During these episodes. Why is this happening, and how can we stabilize it?"
+
+**Diagnosis:**
 ```bash
 > ros topic plot vehicle_global_position lat
 ```
@@ -102,12 +104,12 @@ Shows periodic spikes in the position.
 ```
 Shows satellite count dropping from ~18 to ~6 periodically.
 
-The GPS driver simulates intermittent satellite loss (urban canyon effect). When satellites drop, position uncertainty increases and the GPS reports incorrect positions.
+The GPS driver simulates intermittent satellite loss, simulating jamming. 
 
 **Solution:**
 ```bash
 > param set MIN_GPS_SAT_VAL 12
 ```
-This tells the filter to reject GPS data when satellites < 12. During dropouts, the system uses dead reckoning (smooth drift) instead of the erratic GPS.
+This tells the filter to reject GPS data when satellites < 12. During dropouts, the system uses dead reckoning instead of the occasionally unstable GPS. 
 
 
