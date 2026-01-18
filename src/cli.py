@@ -17,8 +17,8 @@ import termios
 import re
 
 def setup_environment():
-    if os.environ.get("INTERVIEW_ADMIN") == "1":
-        marker_file = "src/parameters/pack_param_sol.py"
+    if os.environ.get("INTERVIEW_ADMIN") != "1":
+        marker_file = "README.md"
         if os.path.exists(marker_file):
             files_to_rem = [
                 "src/lib/gps_driver.py",
