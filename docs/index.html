@@ -10,7 +10,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
             line-height: 1.6;
             color: #333;
-            max_width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
             background-color: #f4f6f9;
@@ -26,6 +26,13 @@
 
         h1 {
             margin: 0;
+        }
+
+        h2 {
+            color: #3f51b5;
+            border-bottom: 2px solid #3f51b5;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
         }
 
         .param-card {
@@ -83,13 +90,109 @@
         <h1>CoolX4 Parameter Reference</h1>
     </header>
 
+    <h2>B</h2>
+
+    <div class="param-card">
+        <div class="param-name">BAT_CRIT_THR</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 5 | Min: 0 | Max: 15
+        </div>
+        <p>Critical battery threshold as percentage of capacity. Triggers emergency landing when reached.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Threshold percentage (0-15, maps to 0-30%)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">BAT_LOW_THR</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 10 | Min: 0 | Max: 15
+        </div>
+        <p>Low battery warning threshold as percentage of capacity.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Threshold percentage (0-15, maps to 0-45%)</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>C</h2>
+
+    <div class="param-card">
+        <div class="param-name">COM_ARM_EKF</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 1 | Min: 0 | Max: 15
+        </div>
+        <p>Maximum EKF innovation threshold for arming. Higher values allow arming with less accurate state estimates.
+        </p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Innovation threshold multiplier (0-15)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">COM_FLTMODE</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 2 | Min: 0 | Max: 15
+        </div>
+        <p>Default flight mode on boot.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>0=Manual, 1=Altitude, 2=Position, 3=Mission, 4=Loiter</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">COM_RC_LOSS</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 3 | Min: 0 | Max: 15
+        </div>
+        <p>Action on RC signal loss.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>0=Disabled, 1=Loiter, 2=RTL, 3=Land, 4=Terminate</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>F</h2>
+
     <div class="param-card">
         <div class="param-name">FILTER_FUSE_SRC</div>
         <div class="param-meta">
             Type: 4-bit Integer | Default: 6 | Min: 0 | Max: 15
         </div>
         <p>Bitmask to determine which sensors are fused into the state estimator.</p>
-
         <table class="bit-table">
             <tr>
                 <th>Bit</th>
@@ -114,13 +217,14 @@
         </table>
     </div>
 
+    <h2>G</h2>
+
     <div class="param-card">
-        <div class="param-name">GPS_PUB_FREQ</div>
+        <div class="param-name">GEO_FENCE_ACT</div>
         <div class="param-meta">
             Type: 4-bit Integer | Default: 1 | Min: 0 | Max: 15
         </div>
-        <p>Sets the frequency (in Hz) at which the GPS module samples and publishes position data.</p>
-
+        <p>Action when geofence is breached.</p>
         <table class="bit-table">
             <tr>
                 <th>Bit</th>
@@ -128,7 +232,25 @@
             </tr>
             <tr>
                 <td>0-3</td>
-                <td>Frequency Value in Hz (0-15)</td>
+                <td>0=None, 1=Warning, 2=Loiter, 3=RTL, 4=Land</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">GEO_MAX_ALT</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 8 | Min: 0 | Max: 15
+        </div>
+        <p>Maximum allowed altitude above home position.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Altitude limit (value × 50m, 0-750m)</td>
             </tr>
         </table>
     </div>
@@ -164,11 +286,109 @@
     </div>
 
     <div class="param-card">
+        <div class="param-name">GPS_PUB_FREQ</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 1 | Min: 0 | Max: 15
+        </div>
+        <p>Sets the frequency (in Hz) at which the GPS module samples and publishes position data.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Frequency Value in Hz (0-15)</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>I</h2>
+
+    <div class="param-card">
+        <div class="param-name">IMU_DGYRO_CUT</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 8 | Min: 0 | Max: 15
+        </div>
+        <p>Gyroscope low-pass filter cutoff frequency.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Cutoff frequency (value × 10 Hz)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">IMU_INTEG_RATE</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 4 | Min: 0 | Max: 15
+        </div>
+        <p>IMU integration rate divider for state estimation.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Rate divider (IMU rate / value)</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>L</h2>
+
+    <div class="param-card">
+        <div class="param-name">LND_FLIGHT_T</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 0 | Min: 0 | Max: 15
+        </div>
+        <p>Minimum flight time before landing detection is enabled.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Time in seconds (0-15)</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>M</h2>
+
+    <div class="param-card">
+        <div class="param-name">MAG_COMP_TYP</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 0 | Min: 0 | Max: 15
+        </div>
+        <p>Magnetometer compensation type for motor interference.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>0=Disabled, 1=Throttle, 2=Current, 3=Both</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
         <div class="param-name">MIN_GPS_SAT_VAL</div>
         <div class="param-meta">
             Type: 4-bit Integer | Default: 0 | Min: 0 | Max: 15
         </div>
         <p>Minimum number of satellites required to fuse GPS data.</p>
+        <p>If the number of satellites reported by the GPS module is below this value, the GPS measurement will be
+            rejected by the filter.</p>
         <table class="bit-table">
             <tr>
                 <th>Bit</th>
@@ -177,6 +397,230 @@
             <tr>
                 <td>0-3</td>
                 <td>Minimum Satellite Count (0-15)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">MOT_SLEW_MAX</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 0 | Min: 0 | Max: 15
+        </div>
+        <p>Maximum motor slew rate limit.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>0=Disabled, 1-15=Rate limit (%/10ms)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">MPC_THR_HOVER</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 8 | Min: 0 | Max: 15
+        </div>
+        <p>Hover throttle estimate used for altitude control.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Throttle percentage (value × 5%, 0-75%)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">MPC_XY_VEL_MAX</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 12 | Min: 0 | Max: 15
+        </div>
+        <p>Maximum horizontal velocity in position control mode.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Velocity limit (value m/s)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">MPC_Z_VEL_MAX</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 5 | Min: 0 | Max: 15
+        </div>
+        <p>Maximum vertical descent velocity.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Velocity limit (value × 0.5 m/s)</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>N</h2>
+
+    <div class="param-card">
+        <div class="param-name">NAV_ACC_RAD</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 5 | Min: 0 | Max: 15
+        </div>
+        <p>Waypoint acceptance radius for mission mode.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Radius in meters (0-15m)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">NAV_RCL_ACT</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 2 | Min: 0 | Max: 15
+        </div>
+        <p>Action when RC link is lost during mission.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>0=Continue, 1=Loiter, 2=RTL, 3=Land</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>R</h2>
+
+    <div class="param-card">
+        <div class="param-name">RC_CHAN_CNT</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 8 | Min: 0 | Max: 15
+        </div>
+        <p>Number of RC channels to process.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Channel count (0-15)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">RTL_RETURN_ALT</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 10 | Min: 0 | Max: 15
+        </div>
+        <p>Return-to-launch altitude above home position.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Altitude (value × 10m, 0-150m)</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>S</h2>
+
+    <div class="param-card">
+        <div class="param-name">SYS_AUTOSTART</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 4 | Min: 0 | Max: 15
+        </div>
+        <p>Airframe configuration preset.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Airframe ID (see airframe reference)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">SYS_MC_EST_GRP</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 2 | Min: 0 | Max: 15
+        </div>
+        <p>Estimator group selection for multicopter.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>0=Disabled, 1=LPE, 2=EKF2, 3=Q Estimator</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2>T</h2>
+
+    <div class="param-card">
+        <div class="param-name">TEL_FRSKY_CFG</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 0 | Min: 0 | Max: 15
+        </div>
+        <p>FrSky telemetry configuration.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>0=Disabled, 1-15=UART port number</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="param-card">
+        <div class="param-name">THR_MDL_FAC</div>
+        <div class="param-meta">
+            Type: 4-bit Integer | Default: 5 | Min: 0 | Max: 15
+        </div>
+        <p>Thrust to motor mapping factor for non-linear ESCs.</p>
+        <table class="bit-table">
+            <tr>
+                <th>Bit</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>0-3</td>
+                <td>Factor (value × 0.1, 0.0-1.5)</td>
             </tr>
         </table>
     </div>
