@@ -2,8 +2,6 @@ import sys
 from src.parameters.pack_param import pack_imu_calibration
 
 def test():    
-    print("Running Calibration Encoder Tests...")
-
     def verify(packed):
         wx = (packed >> 20) & 0xF
         wy = (packed >> 24) & 0xF
